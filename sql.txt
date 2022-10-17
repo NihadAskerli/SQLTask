@@ -30,23 +30,28 @@ select to_date('12-02-2003','dd-mm-yyyy') +level from dual connect by level<(sel
 select distinct last_day(trunc(to_date('07-02-2021','dd-mm-yyyy'),'month')+level)from dual connect by level<100000;
 --ilin son gunleri
 
-
-
-
-
-
-
-
-
-
-
-
 select employees.first_name,products.product_name FROM employees 
 inner join orders on employees.employee_id=orders.salesman_id  
 inner join order_items on orders.order_id=order_items.order_id 
 inner join products on order_items.product_id=products.product_id;
 
-
+select
+employee_id,
+warehouse_name,
+sum(i.quantity)
+from employees e
+inner join orders o
+on e.employee_id=o.salesman_id
+inner join order_items oi
+on o.order_id=oi.order_id
+inner join products p
+on oi.product_id=p.product_id
+inner join inventories i
+on p.product_id=i.product_id
+inner join warehouses w
+on i.warehouse_id=w.warehouse_id
+group by employee_id,warehouse_name;
+--hansi isci hansi anbardan ne qeder mehsul satib
 
 
 
